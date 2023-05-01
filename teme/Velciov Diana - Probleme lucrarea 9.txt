@@ -1,0 +1,78 @@
+Velciov Diana 7.2
+
+
+EXERCITIUL 1
+
+> (defun chei (lista) (setq a '())
+  (do((l lista (cdr l)))
+  ((null l) a)
+  (setq a (append a (cdr (car l))))
+))
+CHEI
+> (setq telefon '((marca samsung) (culoare alb) (tip galaxyS7)))
+((MARCA SAMSUNG) (CULOARE ALB) (TIP GALAXYS7))
+> (chei telefon)
+(SAMSUNG ALB GALAXYS7)
+
+
+EXERCITIUL 2
+
+> (setf (get 'Ion 'tata) '(Gheorghe))
+(GHEORGHE)
+> (setf (get 'Gheorghe 'tata) '(Mihai))
+(MIHAI)
+
+> (defun bunic (simbol) (car (get (car (get simbol 'tata )) 'tata)))
+BUNIC
+>(defun Adam (simbol) (if (not (bunic simbol)) (get simbol 'tata) (Adam (car (get simbol 'tata))) ) )
+ADAM
+> (adam 'ion)
+(MIHAI)
+
+
+EXERCITIUL 3
+
+> (setf (get 'Ion 'mama) '(Mirela))
+(MIRELA)
+> (setf (get 'Mirela 'mama) '(Ionela))
+(IONELA)
+> (setf (get 'Ionela 'mama) '(Vasilica))
+(VASILICA)
+> (setf (get 'Vasilica 'mama) '(Marioara))
+(MARIOARA)
+> (setf (get 'Ion 'tata) '(Gheorghe))
+(GHEORGHE)
+> (setf (get 'Gheorghe 'tata) '(Mihai))
+(MIHAI)
+> (setf (get 'Mishu 'tata) '(Gigi))
+(GIGI)
+> (setf (get 'Gigi 'tata) '(Vasile))
+(VASILE)
+
+>(defun stramosi_rec (simbol)
+    (setq a (if (not (bunic simbol)) (get simbol 'tata) (append (append (get simbol 'tata) (stramosi_rec (car (get simbol 'tata)))))
+    ))
+    (append a (if (not (bunica simbol)) (get simbol 'mama) (append (get simbol 'mama) (stramosi_rec (car (get simbol 'mama))))
+    )))
+)
+STRAMOSI_REC
+
+>(defun stramosi (simbol) (append (list simbol) (stramosi_rec simbol)) )
+STRAMOSI
+> (stramosi 'ion)
+(ION GHEORGHE MIHAI GIGI VASILE MIRELA IONELA VASILICA MARIOARA)
+
+
+EXERCITIUL 4
+
+(defmacro dotimes(var count rezultat corp)
+  `(do((,var 0 (+ ,var 1)))
+  ((equal ,var ,count) ,rezultat)
+  (setq ,rezultat ,corp) )
+)
+> (setq a 0)
+0
+> (setq b 0)
+0
+> (dotimes a 11 b (+ a b))
+55

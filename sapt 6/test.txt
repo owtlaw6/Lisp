@@ -1,0 +1,4 @@
+(defun rotire (n l)
+  (if (zerop n)
+      nil
+      (append (last l) rotire ((- n 1) (cdr l)))))

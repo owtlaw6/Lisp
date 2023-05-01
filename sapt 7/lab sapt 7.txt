@@ -1,0 +1,11 @@
+> (defun trim-tail(l n)
+  (do (lungime (- (length l) n) (- lungime 1))
+  (lista l (cdr lista))
+  (x '() (cons (car lista) x)))
+  ((zerop lungime) (reverse x))
+))
+TRIM-TAIL
+> (trim-tail '(1 2 3 4) 1)
+(1 2 3)
+> (trim-tail '(1 2 3 4) 2)
+(1 2)

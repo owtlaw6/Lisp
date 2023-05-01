@@ -1,0 +1,7 @@
+(setf (get 'Laborator 'nota) '10)
+(setf (get 'Examen 'nota) '(10 4))
+
+(defun medie (l)
+    (/ (+ (* (get (car l) 'nota) 40) (* (+ (car(get (car (cdr l)) 'nota) (car (cdr (get (car (cdr l)) 'nota)))) )) '100))
+)
+

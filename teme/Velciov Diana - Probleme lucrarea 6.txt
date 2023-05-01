@@ -1,0 +1,71 @@
+Velciov Diana 7.2
+
+
+EXERCTIUL 1
+
+> (defun fara_dubluri(L) (cond ((null L) L) ((member (car L) (cdr L)) (fara_dubluri (cdr L))) (t (cons (car L) (fara_dubluri (cdr L))))))
+FARA_DUBLURI
+> (fara_dubluri '(1 2 2 3 4 5 6 4 4))
+(1 2 3 5 6 4)
+
+
+EXERCITIUL 2
+
+> (defun presentp (c L)
+  (cond
+   ((null L) nil)
+   ((equal c (car L)) t)
+   ((listp (car L))
+    (or (presentp c (car L) )
+        (presentp c (cdr L))))
+   ((presentp c (cdr L)))))
+PRESENTP
+> (presentp '3 '(1 (2 3) 4 6 7))
+T
+> (presentp '3 '(1 (2 4) 3 4 6 7))
+T
+> (presentp '3 '(1 (2 4) 4 6 7))
+NIL
+
+
+EXERCITIUL 3
+
+> (defun cifre (nr)
+  (cond 
+  ((< nr 10) (list (floor nr)))
+  (t (append (cifre (/ nr 10)) (cifre (mod nr 10))))
+))
+CIFRE
+> (cifre '567890)
+(5 6 7 8 9 0)
+
+
+EXERCITIUL 4
+
+> (defun lungimi(L)
+  (cond
+  ((null l) nil)
+  ((null (car l)) (cons 0 (lungimi (cdr l)) ))
+  ((atom (car l)) (lungimi(cdr l)))
+  ((listp (car l)) (cons (length (car l)) (lungimi (cdr l)) ))
+))
+LUNGIMI
+> (lungimi '( ( 4 5) 3 5 (1 2 3 4) 2 (3)))
+(2 4 1)
+> (lungimi '( ( 4 5 6) 3 5 (1 2 3 4) 2 () (3)))
+(3 4 0 1)
+> (lungimi '( 4 5 6 3 5 1 2 3 4 2 3))
+NIL
+
+
+EXERCITIUL 5
+
+> (defun impar (L)
+  (cond
+  ((null l) nil)
+  (( = (mod (car l) 2) 1) (cons (car l) (impar (cdr l))))
+  (t (impar (cdr l)))
+))
+IMPAR
+> (impar '(1 2 3 4 5 6 7 8 9))
+(1 3 5 7 9)

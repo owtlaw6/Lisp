@@ -1,0 +1,70 @@
+Velciov Diana 7.2
+
+
+EXERCITIUL 1
+
+> (defun reuniune (L1 L2) (append (remove-if-not '(lambda (x) (cond ((not (member x L2)) T))) L1) L2))
+REUNIUNE
+> (reuniune '(1 2 3 4 5 6 7 8 9) '(0 1 2 10 11 12 13 3))
+(4 5 6 7 8 9 0 1 2 10 11 12 13 3)
+
+> (defun intersectie (L1 L2) (remove-if-not '(lambda (x) (cond ((member x L2) T))) L1))
+INTERSECTIE
+> (intersectie '(1 2 3 4 5 6 7 8 9) '(0 1 2 10 11 12 13 3))
+(1 2 3)
+
+> (defun diferenta (L1 L2) (remove-if-not '(lambda (x) (cond ((not (member x L2)) T))) L1))
+DIFERENTA
+> (diferenta '(1 2 3 4 5 6 7 8 9) '(0 1 2 10 11 12 13 3))
+(4 5 6 7 8 9)
+
+
+EXERCITIUL 2
+
+> (setq pard '|(|))
+|(|
+> 
+Error: misplaced close paren
+Happened in: #<Subr: #2b552c4>
+> (setq par '|)|)
+|)|
+> (setq spatiu '| |)
+| |
+
+> (defun spatii(nr)
+  (do((cnt (- nr 1) (- cnt 1)))
+  ((zerop cnt) (princ spatiu))
+  (princ spatiu)
+))
+SPATII
+
+> (defun afiseaza (lst nr)
+  (princ pard)(princ spatiu)(princ (car lst))(terpri)
+  (do((numar (+ nr 2))(lista (cdr lst) (cdr lista)))
+  ((null (cdr lista)) (spatii numar) (princ (car lista)) (princ spatiu) (princ par))
+  (spatii numar)(princ (car lista))(terpri)
+))
+AFISEAZA
+
+> (defun functie (lst)
+  (princ pard)(princ spatiu)(princ (car lst))(terpri)
+  (do((numar 2) (lista (cdr lst) (cdr lista)) (lista2 lst (cdr lista2)))
+  ((null (cdr lista)) (if (atom (car lista)) (or (and (princ spatiu)(and (princ spatiu) (princ (car lista)))) (princ spatiu) (princ par)) (and (afiseaza (car lista) 0) (princ spatiu) (princ par))))
+  (cond 
+  ((and (atom (car lista)) (atom (car lista2))) (spatii numar) (princ (car lista)) (terpri))
+  ((and (atom (car lista2)) (listp (car lista))) (spatii numar) (afiseaza (car lista) numar) (terpri))
+  ((and (listp (car lista2)) (atom (car lista))) (setq numar (+ numar 4)) (spatii numar) (princ (car lista)) (terpri))
+  ((and (listp (car lista)) (listp (car lista2))) (setq numar (+ numar 4)) (spatii numar) (afiseaza (car lista) numar) (terpri))
+)) (princ spatiu)(princ par))
+FUNCTIE
+> (functie '(a b (c d) (e f g) h))
+( A
+  B
+  ( C
+    D )
+      ( E
+        F
+        G )
+  H )
+|)|
+

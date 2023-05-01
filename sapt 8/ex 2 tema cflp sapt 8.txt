@@ -1,0 +1,13 @@
+> (defun print1-lista(l)
+(princ pard)
+(do((lst l (cdr lst)))
+((null (cdr lst))(princ space)(princ space)(princ (car lst))(princ space)(princ par))
+(princ space)(princ space)(princ (car lst))(terpri)))
+PRINT1-LISTA
+> (print1-lista '(a b (c d) e f))
+{  A
+  B
+  (C D)
+  E
+  F }
+}

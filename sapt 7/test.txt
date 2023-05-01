@@ -1,0 +1,7 @@
+> (defun f(lista) 
+  (do ((l lista (cdr l)) (x '() (append  x (list (+ (car l) 1)) )))
+  ((null l) x)
+))
+F
+> (f '(1 2 3 4 5 6))
+(2 3 4 5 6 7)

@@ -1,0 +1,4 @@
+(defun functie (lista)
+  (cond ((atom lista)(if(and(plusp lista)(> lista 0)) lista 1)) (t (apply '* (mapcar '(lambda (x) (functie x)) lista)))))
+
+(functie '(-2 3 0 -6 9 1 0))

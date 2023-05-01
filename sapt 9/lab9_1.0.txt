@@ -1,0 +1,39 @@
+> (defun fetch (cheie lista)
+    (if (car(cdr (assoc cheie lista))) (car(cdr (assoc cheie lista))) 'Eroare!)
+)
+FETCH
+> (fetch 'temperature '((temperatura 100)
+(pressure (120 60))
+(pulse 72)))
+(EROARE!)
+> (fetch 'temperature '((temperature 100)
+(pressure (120 60))
+(pulse 72)))
+100
+
+
+
+
+
+
+
+> (defun bunic (simbol)
+    (car (get (car (get simbol 'tata )) 'tata))
+)
+BUNIC
+
+> (setf (get 'Ion 'tata) '(Gheorghe))
+(GHEORGHE)
+> (setf (get 'Gheorghe 'tata) '(Mishu))
+(MISHU)
+
+> (bunic 'Ion)
+MISHU
+
+
+
+
+
+
+
+

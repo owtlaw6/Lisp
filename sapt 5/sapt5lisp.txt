@@ -1,0 +1,40 @@
+> (setq x 3)
+3
+> (setq y -1)
+-1
+> (if (< 0 x) x (* -1 x))
+3
+> (if (< 0 y) y (* -1 y))
+1
+
+
+> (if x t nil)
+T
+> (setq z nil)
+NIL
+> (if z t nil)
+NIL
+
+
+> (defun my-third (L) (caddr L))
+MY-THIRD
+> (my-third '(1 2 3 4))
+3
+
+
+> (defun my-last (L) (car (nthcdr (- (length L) 1) L)))
+MY-LAST
+> (my-last '(1 2 3 4 5))
+5
+
+
+> (defun my-append (L1 L2) (append L1 L2))
+MY-APPEND
+> (my-append '(1 2 3) '(4 5))
+(1 2 3 4 5)
+
+> (defun palindrom (l1 l2) (equal (my-append l1 l2) (reverse (my-append l1 l2))) )
+PALINDROM
+> (palindrom '(1 2 3) '(2 1))
+T
+

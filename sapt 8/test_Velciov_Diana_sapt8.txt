@@ -1,0 +1,4 @@
+> (defun ff (L) (mapcar '(lambda (x) (cond ((atom x) (list x)) (x)))  L))
+FF
+> (ff '(1 (2 3) 4 (6 7 8) 3 1 (8)))
+((1) (2 3) (4) (6 7 8) (3) (1) (8))

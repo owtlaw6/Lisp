@@ -1,0 +1,792 @@
+XLISP-PLUS version 3.04
+Portions Copyright (c) 1988, by David Betz.
+Modified by Thomas Almy and others.
+XLISP-STAT Release 3.52.17 (Beta).
+Copyright (c) 1989-1999, by Luke Tierney.
+
+>  (mapcan 'cdr '((1 2 3) (3 4 5) (5 6 7)))
+
+(2 3 4 5 6 7)
+>  (mapcan 'cdr '((1 2 3) (3 4 5) (5 6 7)))r\
+(2 3 4 5 6 7)
+> (mapcar 'cdr '((1 2 3) (3 4 5) (5 6 7)))
+((2 3) (4 5) (6 7))
+> (mapcan 'last '((a b) (c d ) (e f)))
+(B D F)
+> (mapcar 'last '((a b) (c d ) (e f)))
+((B) (D) (F))
+> (remove-if-not 'evenp '(2 3 4 5 6 8))
+(2 4 6 8)
+> (mapcar 'evenp '(2 3 4 5 6 8))
+(T NIL T NIL T T)
+> (mapcan 'evenp '(2 3 4 5 6 8))
+Error: non-list to concatenate - T
+Happened in: #<Subr-MAPCAN: #2d44064>
+> (mapcan 'evenp '((2) (3) (4) (5) (6) (8)))
+(T NIL T NIL T T)
+> (defun fct (s)
+(princ pard)
+(princ space)
+(princ s)
+(terpri)
+(princ par))
+FCT
+> (fct aa)
+Error: The variable AA is unbound.
+> (fct 'aa)
+Error: The variable PARD is unbound.
+Happened in: #<Subr-TOP-LEVEL-LOOP: #2d62f14>
+> (setq pard '|{|)
+{
+>  (setq space '| |)
+| |
+> (setq par '|}|)
+}
+> (defun fct (s)
+(princ pard)
+(princ space)
+(princ s)
+(terpri)
+(princ par))
+FCT
+> (fct 'aa)
+{ AA
+}
+}
+> (defun fct (s)
+(princ pard)
+(princ space)
+(princ s)
+(princ space)
+(princ par))
+FCT
+> (fct 'aa)
+{ AA }
+}
+> (fct '|aa|)
+{ aa }
+}
+> (defun fct (s)
+(princ pard)
+(princ space)
+(prin1 s)
+(princ space)
+(princ par))
+FCT
+> (fct '|a|)
+{ |a| }
+}
+> (defun f (l) (apply '+ (mapcan (lambda (lista) (
+do ((l lista (cdr l))
+    (poz 0 (+ 1 poz)) 
+    (x '() (if (equal 0 (rem poz 2)) (append x (list (car l)))  x)))
+    ((null l) x)))
+l)
+)))
+F
+> 
+Error: misplaced close paren
+Happened in: #<Subr: #2d452c4>
+> (defun f (l) (apply '+ (mapcan (lambda (lista) (
+do ((l lista (cdr l))
+    (poz 0 (+ 1 poz)) 
+    (x '() (if (equal 0 (rem poz 2)) (append x (list (car l)))  x)))
+    ((null l) x)))
+l)
+))
+F
+> (f '(1 2 3))
+Error: bad argument type - 1
+Happened in: #<Subr-CDR: #2d44ca4>
+> (defun f (l) (apply '+ (mapcan (lambda (lista) (
+do ((l lista (cdr l))
+    (poz 0 (+ 1 poz)) 
+    (x '() (if (equal 0 (rem poz 2)) (append x (list (car l)))  x)))
+    ((null l) x))
+l)
+)))
+F
+> (f '(1 2 3))
+Error: too few arguments
+Happened in: #<Subr-MAPCAN: #2d44064>
+> (defun f (l) (apply '+ (mapcan (lambda (lista) (
+do ((l lista (cdr l))
+    (poz 0 (+ 1 poz)) 
+    (x '() (if (equal 0 (rem poz 2)) (append x (list (car l)))  x)))
+    ((null l) x)))
+l)
+))
+F
+> (f '(1 2 3))
+Error: bad argument type - 1
+Happened in: #<Subr-CDR: #2d44ca4>
+> (defun f (LL) (apply '+ (mapcan (lambda (lista) (
+do ((l lista (cdr l))
+    (poz 0 (+ 1 poz)) 
+    (x '() (if (equal 0 (rem poz 2)) (append x (list (car l)))  x)))
+    ((null l) x)))
+LL)
+))
+F
+> (f '(1 2 3))
+Error: bad argument type - 1
+Happened in: #<Subr-CDR: #2d44ca4>
+> (defun f (l) (apply '+ (mapcan 'pozpar l)
+))
+F
+> (defun pozpar (lista) (
+do ((l lista (cdr l))
+    (poz 0 (+ 1 poz)) 
+    (x '() (if (equal 0 (rem poz 2)) (append x (list (car l)))  x)))
+    ((null l) x)))
+POZPAR
+> (defun f (l) (apply '+ (mapcan 'pozpar l)
+))
+F
+> (f '(1 2 3))
+Error: bad argument type - 1
+Happened in: #<Subr-CDR: #2d44ca4>
+> (defun f (l) (apply '+ (mapcar 'pozpar l)
+))
+F
+> (f '(1 2 3))
+Error: bad argument type - 1
+Happened in: #<Subr-CDR: #2d44ca4>
+> (defun f (LL) (apply '+ (mapcar 'pozpar LL)
+))
+F
+> (f '(1 2 3))
+Error: bad argument type - 1
+Happened in: #<Subr-CDR: #2d44ca4>
+> (pozpar '(1 2 3))
+(1 3)
+> (f '((1 2 3)))
+(1 3)
+> (defun f (l) (funcall'+ (mapcar 'pozpar l)
+))
+F
+> (f '(1 2 3))
+Error: bad argument type - 1
+Happened in: #<Subr-CDR: #2d44ca4>
+> (f '((1 2 3))
+)
+((1 3))
+> ( funcall '+ ' ( 1 2 3 4 ) )
+(1 2 3 4)
+> ( funcall '+ ' ( 1 2 3 4 ) '(1 2 3 4) )
+(2 4 6 8)
+> (defun f (l) (apply '+ (mapcar 'pozpar 'l) ))
+F
+> (f '(1 2 3))
+Error: bad argument type - L
+Happened in: #<Subr-MAPCAR: #2d44124>
+> defun f (l) (apply '+ (mapcar 'pozpar l) ))
+Error: The variable DEFUN is unbound.
+> (defun f (l) (apply '+ (mapcar 'pozpar l) ))
+F
+> (f '(1 2 3))
+Error: bad argument type - 1
+Happened in: #<Subr-CDR: #2d44ca4>
+> (f '((1 2 3)))
+(1 3)
+> (defun f (l) (apply '+ (mapcar 'pozpar l) ))
+F
+> (f '((1 2) (2 3) (4 5)))
+(7)
+> (f '((1 2) (2 3) (4 5 6)))
+Error: arguments not all the same length
+Happened in: #<Subr-+: #2d5f5a4>
+> (mapcar 'pozpar '(1 2 3 4 5 6 7 8 9))
+Error: bad argument type - 1
+Happened in: #<Subr-CDR: #2d44ca4>
+> (mapcar 'pozpar '((1 2 3 4 5 6 7 8 9)))
+((1 3 5 7 9))
+> (defun f (l) (apply '+ (cons (mapcar 'pozpar l)) ))
+F
+> (f '(1 2 3))
+Error: bad argument type - 1
+Happened in: #<Subr-CDR: #2d44ca4>
+> (f '((1 2 3)))
+Error: too few arguments
+Happened in: #<Subr-CONS: #2d44594>
+> (defun f (l) (apply '+ (mapcan 'pozpar l) ))
+F
+> (f '(1 2 3))
+Error: bad argument type - 1
+Happened in: #<Subr-CDR: #2d44ca4>
+> (f '((1) (2) (3)))
+6
+> (defun f (l) (apply '+ (pozpar l) ))
+F
+> (f '(1 2 3))
+4
+> (f '((1) (2) (3) (4 5))
+)
+(4)
+> (f '((1) (2) (3 6) (4 5)))
+Error: arguments not all the same length
+Happened in: #<Subr-+: #2d5f5a4>
+> (pozpar '((1) (2) (3) (4 5))
+)
+((1) (3))
+> (defun pozpar (lista) (
+do ((l lista (cdr l))
+    (poz 0 (+ 1 poz)) 
+    (x '() (if (equal 0 (rem poz 2)) (cons x (car l))  x)))
+    ((null l) x)))
+POZPAR
+> (defun f (l) (apply '+ (pozpar l) ))
+F
+> (f '((1) (2) (3 4) 5))
+Error: bad argument type - NIL
+Happened in: #<Subr: #2d9a6c8>
+>  (pozpar '((1) (2) (3 4) 5))
+((NIL 1) 3 4)
+> (defun pozpar (lista) (
+do ((l (cdr lista) (cdr l))
+    (poz 0 (+ 1 poz)) 
+    (x (car lista) (if (equal 0 (rem poz 2)) (cons x (car l))  x)))
+    ((null l) x)))
+POZPAR
+> (pozpar '((1) (2) (3 4) 5))
+(((1) 2) . 5)
+> (defun pozpar (lista) (
+do ((l (cdr lista) (cdr l))
+    (poz 0 (+ 1 poz)) 
+    (x (car lista) (if (equal 0 (rem poz 2)) (append x (car l))  x)))
+    ((null l) x)))
+POZPAR
+> (pozpar '((1) (2) (3 4) 5))
+(1 2 . 5)
+> (defun pozpar (lista) (
+do ((l (cdr lista) (cdr l))
+    (poz 1 (+ 1 poz)) 
+    (x (car lista) (if (equal 0 (rem poz 2)) (append x (car l))  x)))
+    ((null l) x)))
+POZPAR
+> (pozpar '((1) (2) (3 4) 5))
+(1 3 4)
+> (defun f (l) (apply '+ (pozpar l) ))
+F
+> (f '((1) (2) (3 4) 5))
+8
+> (f '(1 2 3 4 5))
+Error: bad argument type - 1
+Happened in: #<Subr-APPEND: #2d44504>
+> (f '((1 2 3 4 5)))
+15
+> (pozpar '(1 2 3 4 5))
+Error: bad argument type - 1
+Happened in: #<Subr-APPEND: #2d44504>
+> (defun pozpar (lista) (
+do ((l lista (cdr l))
+    (poz 1 (+ 1 poz)) 
+    (x (car l) (if (equal 0 (rem poz 2)) (append x (car l))  )))
+    ((null l) x)))
+POZPAR
+> (defun f (l) (apply '+ (pozpar l) ))
+F
+> (f '(1 2 3 4 5))
+Error: The variable L is unbound.
+Happened in: #<Closure-POZPAR: #2da2f64>
+> (pozpar '(1 2 3 4 5))
+Error: The variable L is unbound.
+Happened in: #<Closure-POZPAR: #2da2f64>
+> (f '((1 2 3 4 5)))
+Error: The variable L is unbound.
+Happened in: #<Closure-POZPAR: #2da2f64>
+> (defun pozpar (lista) (
+do ((l (cdr lista) (cdr l))
+    (poz 1 (+ 1 poz)) 
+    (x (car lista) (if (equal 0 (rem poz 2)) (append x (car l))  x)))
+    ((null l) x)))
+POZPAR
+> (pozpar '(1 2 3 4))
+Error: bad argument type - 1
+Happened in: #<Subr-APPEND: #2d44504>
+> (defun pozpar (lista) (
+do ((l lista (cdr l))
+    (poz 1 (+ 1 poz)) 
+    (x (car lista) (if (equal 0 (rem poz 2)) (append x (car l))  x)))
+    ((null l) x)))
+POZPAR
+> (f '(1 2 3 4 5))
+Error: bad argument type - 1
+Happened in: #<Subr-APPEND: #2d44504>
+> (defun pozpar (lista) (
+do ((l (cdr lista) (cdr l))
+    (poz 0 (+ 1 poz)) 
+    (x '() (if (equal 0 (rem poz 2)) (append x (car l))  x)))
+    ((null l) x)))
+POZPAR
+> (f '(1 2 3 4))
+Error: bad argument type - 2
+Happened in: #<Subr-APPEND: #2d44504>
+> (pozpar '(1 2 3 4 5))
+Error: bad argument type - 2
+Happened in: #<Subr-APPEND: #2d44504>
+> (defun pozpar (lista) (
+do ((l lista (cdr l))
+    (poz 0 (+ 1 poz)) 
+    (x '() (if (equal 0 (rem poz 2)) (append x (car l))  x)))
+    ((null l) x)))
+POZPAR
+> (pozpar '(1 2 3 4 5))
+Error: bad argument type - 1
+Happened in: #<Subr-APPEND: #2d44504>
+> (defun pozpar (lista) (
+do ((l lista (cdr l))
+    (poz 0 (+ 1 poz)) 
+    (x '() (if (equal 0 (rem poz 2)) (list x (car l))  x)))
+    ((null l) x)))
+POZPAR
+> (pozpar '(1 2 3 4 5 6))
+(((NIL 1) 3) 5)
+> (defun pozpar (lista) (
+do ((l (cdr lista) (cdr l))
+    (poz 1 (+ 1 poz)) 
+    (x (car lista) (if (equal 0 (rem poz 2)) (list x (car l))  x)))
+    ((null l) x)))
+POZPAR
+> (pozpar '(1 2 3 4))
+(1 3)
+> (defun f (l) (apply '+ (pozpar l) ))
+F
+> (f '(1 2 3 4 5))
+(6 8)
+> (defun f (LL) (apply '+ (anexa LL)))
+F
+> (defun anexa (LL) 
+(do ((lista LL (cddr lista)) (final '() ))
+((null lista) final)
+(setq final (list final (car lista)))
+))
+ANEXA
+> (anexa '(1 2 3 4))
+((NIL 1) 3)
+> (anexa '(1 (2) (3 4) (5) 6 7 8))
+((((NIL 1) (3 4)) 6) 8)
+> (defun anexa (LL) 
+(do ((lista LL (cddr lista)) (final '() ))
+((null lista) final)
+(setq final (cons final (car lista)))
+))
+ANEXA
+> (anexa '(1 (2) (3 4) (5) 6 7 8))
+((((NIL . 1) 3 4) . 6) . 8)
+> (defun anexa (LL) 
+(do ((lista LL (cddr lista)) (final '() ))
+((null lista) final)
+(setq final (cons (car lista) final))
+))
+ANEXA
+> (anexa '(1 (2) (3 4) (5) 6 7 8))
+(8 6 (3 4) 1)
+> (anexa '(1 2 3 4 5))
+(5 3 1)
+> (defun anexa2 (lista)
+  (cond
+   ((null lista) nil)
+   ((atom lista) (setq 'aux (list (aux lista))))
+   ((listp (car lista)) (anexa2 (car lista)))
+   (anexa2 (cdr lista))
+))
+
+ANEXA2
+> (setq 'aux nil)
+Error: bad argument type - (QUOTE AUX)
+Happened in: #<FSubr-SETQ: #2d44fa4>
+> (setq 'aux '())
+Error: bad argument type - (QUOTE AUX)
+Happened in: #<FSubr-SETQ: #2d44fa4>
+> (setq aux nil)
+NIL
+> (defun anexa2 (lista)
+  (cond
+   ((null lista) nil)
+   ((atom lista) (setq 'aux (list (aux lista))))
+   ((listp (car lista)) (anexa2 (car lista)))
+   (anexa2 (cdr lista))
+))
+ANEXA2
+> (anexa2 '(8 6 (3 4) 1))
+Error: The variable ANEXA2 is unbound.
+Happened in: #<Closure-ANEXA2: #2db175c>
+> (defun anexa2 (lista)
+  (cond
+   ((null lista) nil)
+   ((atom lista) (setq aux (list (aux lista))))
+   ((listp (car lista)) (anexa2 (car lista)))
+   (anexa2 (cdr lista))
+))
+ANEXA2
+> (anexa2 '(8 6 (3 4) 1))
+Error: The variable ANEXA2 is unbound.
+Happened in: #<Closure-ANEXA2: #2daff9c>
+> (setq aux nil)
+NIL
+> (defun anexa2 (lista)
+  (cond
+   ((null lista) nil)
+   ((atom lista) (setq aux (list aux lista)))
+   ((listp (car lista)) (anexa2 (car lista)))
+   (anexa2 (cdr lista))
+))
+ANEXA2
+> (anexa2 '(8 6 (3 4) 1))
+Error: The variable ANEXA2 is unbound.
+Happened in: #<Closure-ANEXA2: #2daed2c>
+>(defun anexa2 (lista)
+  (cond
+   ((null lista) nil)
+   ((atom lista) lista)
+   ((listp (car lista)) (list lista (anexa2 (car lista))))
+   (list lista (anexa2 (cdr lista)))
+))
+Error: The variable DEFUN is unbound.
+> (defun anexa2 (lista)
+  (cond
+   ((null lista) nil)
+   ((atom lista) lista)
+   ((listp (car lista)) (list lista (anexa2 (car lista))))
+   (list lista (anexa2 (cdr lista)))
+))
+ANEXA2
+> (anexa2 '(8 6 (3 4) 1))
+Error: The variable LIST is unbound.
+Happened in: #<Closure-ANEXA2: #2dbcc48>
+> (defun anexa2 (lista)
+  (cond
+   ((null lista) nil)
+   ((atom lista) lista)
+   ((listp (car lista)) (anexa2 (car lista)))
+   (list lista (anexa2 (cdr lista)))
+))
+ANEXA2
+> (anexa2 '(8 6 (3 4) 1))
+Error: The variable LIST is unbound.
+Happened in: #<Closure-ANEXA2: #2dbbad8>
+> (defun anexa2 (lista)
+  (cond
+   ((null lista) nil)
+   ((atom lista) lista)
+   ((listp (car lista)) (list lista (anexa2 (car lista))))
+   (anexa2 (cdr lista))
+))
+ANEXA2
+> (anexa2 '(8 6 (3 4) 1))
+Error: The variable ANEXA2 is unbound.
+Happened in: #<Closure-ANEXA2: #2dba898>
+> (defun anexa2 (lista)
+  (cond
+   ((null lista) nil)
+   ((atom lista) lista)
+   ((listp (car lista)) (list lista (anexa2 (car lista))))
+   (anexa2 (cdr lista))
+))
+ANEXA2
+> (anexa2 '(8 6 (3 4) 1))
+Error: The variable ANEXA2 is unbound.
+Happened in: #<Closure-ANEXA2: #2db9838>
+> (defun anexa2 (lista)
+  (cond
+   ((null lista) nil)
+   ((atom lista) lista)
+   ((listp (car lista)) (anexa2 (car lista)))
+   (list (anexa2 (cdr lista)) lista)
+))
+ANEXA2
+> (anexa2 '(8 6 (3 4) 1))
+Error: The variable LIST is unbound.
+Happened in: #<Closure-ANEXA2: #2db87c8>
+> (defun anexa2 (L)
+    (if (null L)
+        nil
+        (if (atom (car L))
+            (cons (car L) (anexa2 (cdr L)))
+            (append (anexa2 (car L)) (anexa2 (cdr L))))))
+ANEXA2
+> (anexa2 '(8 6 (3 4) 1))
+(8 6 3 4 1)
+> (defun anexa2 (anexa L)
+    (if (null L)
+        nil
+        (if (atom (car L))
+            (cons (car L) (anexa2 (cdr L)))
+            (append (anexa2 (car L)) (anexa2 (cdr L))))))
+ANEXA2
+> (anexa2 '(8 6 (3 4) 1))
+Error: too few arguments
+Happened in: #<Closure-ANEXA2: #2db6978>
+> (defun anexa2 (L)
+    (if (null L)
+        nil
+        (if (atom (car L))
+            (cons (car L) (anexa2 (cdr L)))
+            (append (anexa2 (car L)) (anexa2 (cdr L))))))
+ANEXA2
+> (anexa2 (anexa '(1 (2) (3 4) (5) 6 7 8)))
+(8 6 3 4 1)
+> (defun f (L) (apply '+ (anexa2 (anexa L))))
+F
+> (f '(1 (2) (3 4) (5) 6 7 8))
+22
+> (f '(1 (2) (3 4 1 1) (5) 6 7 8))
+24
+> (defun anexa2 (L)
+    (if (null L)
+        nil
+        (if (atom (car L))
+            (cons (car L) (anexa2 (cdr L)))
+            (append (anexa2 (car L)) (anexa2 (cdr L))))))
+ANEXA2
+> (defun f (L) (apply '+ (anexa2 (lambda (LL) 
+(do ((lista LL (cddr lista)) (final '() ))
+((null lista) final)
+(setq final (cons (car lista) final))
+)))))
+F
+> (f '(1 (2) (3 4 1 1) (5) 6 7 8))
+Error: bad argument type - #<Closure: #2dc2274>
+Happened in: #<Subr-CAR: #2d44cb4>
+> (defun f (L) (apply '+ (anexa2 ((lambda (LL) 
+(do ((lista LL (cddr lista)) (final '() ))
+((null lista) final)
+(setq final (cons (car lista) final))
+)) L))))
+F
+> (f '(1 (2) (3 4 1 1) (5) 6 7 8))
+24
+> (defun anexa2 (L)
+    (if (null L)
+        nil
+        (if (atom (car L))
+            (cons (car L) (anexa2 (cdr L)))
+            (append (anexa2 (car L)) (anexa2 (cdr L))))))
+ANEXA2
+> (defun f (L) (apply '+ (anexa2 (anexa L))))
+F
+> (f '(1 (2) (3 4) (5) 6 7 8))
+22
+> (f '(1 (2) (3 4 1 1) (5) 6 7 8))
+24
+> (f '(1 (2) (3 4 1) (5) 6 7 8))
+23
+
+
+
+
+
+
+
+
+
+
+
+
+XLISP-PLUS version 3.04
+Portions Copyright (c) 1988, by David Betz.
+Modified by Thomas Almy and others.
+XLISP-STAT Release 3.52.17 (Beta).
+Copyright (c) 1989-1999, by Luke Tierney.
+
+> (defun presentp (n lista)
+  (cond
+   ((null lista) nil)
+   ((equal n (car lista)) t)
+   ((listp (car lista))
+    (or (presentp n (car lista))
+        (presentp n (cdr lista))))
+   ((presentp n (cdr lista)))))
+PRESENTP
+> (defun ff (n L) ((lambda (LL) 
+  (do((lista LL (cdr lista)) (suma 0))
+  ((null lista) suma)
+  (if (listp (car lista)) (if (member n lista) (setq suma (+ 1 suma))) (if (equal n (car lista)) (setq suma (+ 1 suma))) )
+) L))
+)
+FF
+> (ff '3 '(1 2 3))
+Error: too few arguments
+Happened in: #<Closure: #2bcdc68>
+> (defun ff (n L) ((lambda (LL n) 
+  (do((lista LL (cdr lista)) (suma 0))
+  ((null lista) suma)
+  (if (listp (car lista)) (if (member n lista) (setq suma (+ 1 suma))) (if (equal n (car lista)) (setq suma (+ 1 suma)))))
+) L n))
+FF
+> (ff '3 '(1 2 3))
+1
+> (ff '3 '(1 2 3 (2 3) (3) (1 2 3 4 5 6)))
+1
+> (defun ff (n L) ((lambda (LL n) 
+  (do((lista LL (cdr lista)) (suma 0))
+  ((null lista) suma)
+  (if (listp (car lista)) (if (not (equal nil (member n lista))) (setq suma (+ 1 suma))) (if (equal n (car lista)) (setq suma (+ 1 suma)))))
+) L n))
+FF
+> (ff '3 '(1 2 3 (2 3) (3) (1 2 3 4 5 6)))
+1
+> (defun ff (n L) (mapcar ((lambda (n LL) (if (listp (car ll)) (if (not (equal nil (member n ll))) (setq suma (+ 1 suma))) (if (equal n (car LL)) (setq suma (+ 1 suma))))) n L) L))
+FF
+> (ff '3 '(1 2 3 (2 3) (3) (1 2 3 4 5 6)))
+Error: The function NIL is not defined.
+Happened in: #<Subr-MAPCAR: #2b94124>
+> (setq suma '0)
+0
+> (defun ff (n L) (mapcar ((lambda (n LL) (if (listp (car ll)) (if (not (equal nil (member n ll))) (setq suma (+ 1 suma))) (if (equal n (car LL)) (setq suma (+ 1 suma))))) n L) L))
+FF
+> (ff '3 '(1 2 3 (2 3) (3) (1 2 3 4 5 6)))
+Error: The function NIL is not defined.
+Happened in: #<Subr-MAPCAR: #2b94124>
+> (defun ff (n L) (mapcar ((lambda (n LL) (if (listp (car ll)) (if (member n ll) (setq suma (+ 1 suma))) (if (equal n (car LL)) (setq suma (+ 1 suma))))) n L) L))
+FF
+> (ff '3 '(1 2 3 (2 3) (3) (1 2 3 4 5 6)))
+Error: The function NIL is not defined.
+Happened in: #<Subr-MAPCAR: #2b94124>
+> (defun ff (n L) (mapcar '((lambda (n LL) (if (listp (car ll)) (if (not (equal nil (member n ll))) (setq suma (+ 1 suma))) (if (equal n (car LL)) (setq suma (+ 1 suma))))) n L) L))
+FF
+> (ff '3 '(1 2 3 (2 3) (3) (1 2 3 4 5 6)))
+Error: bad function - ((LAMBDA (N LL) (IF (LISTP (CAR LL)) (IF (NOT (EQUAL NIL (MEMBER N LL))) (SETQ SUMA (+ 1 SUMA))) (IF (EQUAL N (CAR LL)) (SETQ SUMA (+ 1 SUMA))))) N L)
+Happened in: ((LAMBDA (N LL) (IF (LISTP (CAR LL)) (IF (NOT (EQUAL NIL (MEMBER N LL))) (SETQ SUMA (+ 1 SUMA))) (IF (EQUAL N (CAR LL)) (SETQ SUMA (+ 1 SUMA))))) N L)
+> (defun ff (n L) (mapcar ((lambda (n LL) (if (listp (car ll)) (if (not (equal nil (member n ll))) (setq suma (+ 1 suma))) (if (equal n LL) (setq suma (+ 1 suma))))) n L) L))
+FF
+> (ff '3 '(1 2 3 (2 3) (3) (1 2 3 4 5 6)))
+Error: The function NIL is not defined.
+Happened in: #<Subr-MAPCAR: #2b94124>
+> (defun ff (n L) (mapcar ((lambda (n LL) (if (listp (car ll)) (if (not (equal nil (member n ll))) (setq suma (+ 1 suma))) (if (equal n LL) (setq suma (+ 1 suma))))) n L) L))
+FF
+> (ff '3 '(1 2 3 (2 3) (3) (1 2 3 4 5 6)))
+Error: The function NIL is not defined.
+Happened in: #<Subr-MAPCAR: #2b94124>
+> (defun ff (n L) (mapcar ((lambda (n LL) (if (listp (car ll)) (if (not (equal nil (member n ll))) (setq suma (+ 1 suma))) (if (equal n LL) (setq suma (+ 1 suma))))) n L) n L))
+FF
+> (ff '3 '(1 2 3 (2 3) (3) (1 2 3 4 5 6)))
+Error: bad argument type - 3
+Happened in: #<Subr-MAPCAR: #2b94124>
+> (defun ff (n L) (mapcar ((lambda (n LL) (if (listp (car ll)) (if (not (equal nil (member n ll))) (setq suma (+ 1 suma))) (if (equal n LL) (setq suma (+ 1 suma)))))) n L))
+FF
+> (ff '3 '(1 2 3 (2 3) (3) (1 2 3 4 5 6)))
+Error: too few arguments
+Happened in: #<Closure: #2bdcab0>
+> (defun ff (n L) (mapcar (lambda (n LL) (if (listp (car ll)) (if (not (equal nil (member n ll))) (setq suma (+ 1 suma))) (if (equal n LL) (setq suma (+ 1 suma))))) n L))
+FF
+> (ff '3 '(1 2 3 (2 3) (3) (1 2 3 4 5 6)))
+Error: bad argument type - 3
+Happened in: #<Subr-MAPCAR: #2b94124>
+> (defun ff (n L) (mapcar '(lambda (n LL) (if (listp (car ll)) (if (not (equal nil (member n ll))) (setq suma (+ 1 suma))) (if (equal n LL) (setq suma (+ 1 suma))))) n L))
+FF
+> (ff '3 '(1 2 3 (2 3) (3) (1 2 3 4 5 6)))
+Error: bad argument type - 3
+Happened in: #<Subr-MAPCAR: #2b94124>
+> (defun ff (n L) (mapcan '(lambda (n LL) (if (listp (car ll)) (if (not (equal nil (member n ll))) (setq suma (+ 1 suma))) (if (equal n LL) (setq suma (+ 1 suma))))) n L))
+FF
+> (ff '3 '(1 2 3 (2 3) (3) (1 2 3 4 5 6)))
+Error: bad argument type - 3
+Happened in: #<Subr-MAPCAN: #2b94064>
+> (defun ff (n L) (mapcar '(lambda (n LL) (if (listp (car ll)) (if (not (equal nil (member n ll))) (setq suma (+ 1 suma))) (if (equal n LL) (setq suma (+ 1 suma))))) '(n L)))
+FF
+> (ff '3 '(1 2 3 (2 3) (3) (1 2 3 4 5 6)))
+Error: too few arguments
+Happened in: #<Closure: #2bd7ad0>
+> (defun ff (n L) (mapcar '(lambda (n LL) (if (not(equal nil (member n LL))) (setq suma (+ 1 suma)))) n L))
+FF
+> (ff '3 '(1 2 3 (2 3) (3) (1 2 3 4 5 6)))
+Error: bad argument type - 3
+Happened in: #<Subr-MAPCAR: #2b94124>
+> (defun numar_aparitii (lista n)
+  (apply '+ (mapcar (lambda (x) (if (equal x n) 1 0)) lista)))
+NUMAR_APARITII
+> (numar_aparitii '(1 2 3 4 2) '2)
+2
+> (numar_aparitii '(1 2 3 2 2 4 2) '2)
+4
+> (numar_aparitii (anexa2 '(1 (2 w) (3 7 2) 4 2)) '2)
+Error: The function ANEXA2 is not defined.
+> (defun anexa2 (L)
+    (if (null L) nil
+        (if (atom (car L))
+            (cons (car L) (anexa2 (cdr L)))
+            (append (anexa2 (car L)) (anexa2 (cdr L))))))
+ANEXA2
+> (numar_aparitii (anexa2 '(1 (2 w) (3 7 2) 4 2)) '2)
+3
+> (defun anexa22 (L)
+  (do ((lista L (cdr lista)) (aux '()))
+  ((null lista) aux)
+  (if (atom (car lista)) (setq aux (list aux (car lista))) (
+    do((idk lista (car idk)))
+    ((not(listp (car idk))) (setq aux (list aux (car idk))))
+))))
+ANEXA22
+> (anexa22 '(1 (2) (3 4 1 1) (5) 6 7 8))
+(((((((NIL 1) 2) 3) 5) 6) 7) 8)
+> (defun anexa22 (L)
+  (do ((lista L (cdr lista)) (aux '()))
+  ((null lista) aux)
+  (if (atom (car lista)) (setq aux (cons aux (car lista))) (
+    do((idk lista (car idk)))
+    ((not(listp (car idk))) (setq aux (cons aux (car idk))))
+))))
+ANEXA22
+> (anexa22 '(1 (2) (3 4 1 1) (5) 6 7 8))
+(((((((NIL . 1) . 2) . 3) . 5) . 6) . 7) . 8)
+> (defun anexa22 (L)
+  (do ((lista L (cdr lista)) (aux '()))
+  ((null lista) aux)
+  (if (atom (car lista)) (setq (cons aux (car lista)) aux) (
+    do((idk lista (car idk)))
+    ((not(listp (car idk))) (setq (cons aux (car idk)) aux))
+))))
+ANEXA22
+> (anexa22 '(1 (2) (3 4 1 1) (5) 6 7 8))
+Error: bad argument type - (CONS AUX (CAR LISTA))
+Happened in: #<FSubr-SETQ: #2b94fa4>
+> (defun anexa22 (L)
+  (do ((lista L (cdr lista)) (aux '()))
+  ((null lista) aux)
+  (if (atom (car lista)) (setq (cons (car lista)) aux) (
+    do((idk lista (car idk)))
+    ((not(listp (car idk))) (setq (cons (car idk)) aux))
+))))
+ANEXA22
+> (anexa22 '(1 (2) (3 4 1 1) (5) 6 7 8))
+Error: bad argument type - (CONS (CAR LISTA))
+Happened in: #<FSubr-SETQ: #2b94fa4>
+> (defun anexa22 (L)
+  (do ((lista L (cdr lista)) (aux '()))
+  ((null lista) aux)
+  (if (atom (car lista)) (setq aux (cons (car lista) aux)) (
+    do((idk lista (car idk)))
+    ((not(listp (car idk))) (setq aux (cons (car idk) aux)))
+))))
+ANEXA22
+> (anexa22 '(1 (2) (3 4 1 1) (5) 6 7 8))
+(8 7 6 5 3 2 1)
+> (defun anexa22 (L)
+  (do ((lista L (cdr lista)) (aux '()))
+  ((null lista) aux)
+  (if (atom (car lista)) (setq aux (cons (car lista) aux)) (
+    do((idk lista (car idk)))
+    ((not(listp (car idk))) (do
+    ((idkkk idk (cdr idkkk)))
+    ((null lista) nil)
+    (setq aux (cons (car lista) aux))
+)))
+))))
+ANEXA22
+> 
+Error: misplaced close paren
+Happened in: #<Subr: #2b952c4>
+> (defun anexa22 (L)
+  (do ((lista L (cdr lista)) (aux '()))
+  ((null lista) aux)
+  (if (atom (car lista)) (setq aux (cons (car lista) aux)) (
+    do((idk lista (car idk)))
+    ((not(listp (car idk))) (do
+    ((idkkk idk (cdr idkkk)))
+    ((null lista) nil)
+    (setq aux (cons (car lista) aux))
+))))))
+ANEXA22
+> (anexa22 '(1 (2) (3 4 1 1) (5) 6 7 8))

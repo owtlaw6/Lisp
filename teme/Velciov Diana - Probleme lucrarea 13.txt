@@ -1,0 +1,31 @@
+Velciov Diana 7.2
+
+
+# type expresie = Valoare of float
+              | Adunare of (expresie*expresie)
+              | Scadere of (expresie* expresie)
+              | Inmultire of (expresie*expresie)
+              | Impartire of (expresie* expresie)
+              | Fc1 of ((float->float)*expresie)
+              | Fc2 of ((float->float->float)*expresie*expresie);;
+type expresie =
+    Valoare of float
+  | Adunare of (expresie * expresie)
+  | Scadere of (expresie * expresie)
+  | Inmultire of (expresie * expresie)
+  | Impartire of (expresie * expresie)
+  | Fc1 of ((float -> float) * expresie)
+  | Fc2 of ((float -> float -> float) * expresie * expresie)
+
+# let rec functie = function
+  | Valoare nr->nr
+  | Adunare (sum1, sum2)->functie sum1 +. functie sum2
+  | Scadere (dif1, dif2)->functie dif1 -. functie dif2
+  | Inmultire (prod1, prod2)->functie prod1 *. functie prod2
+  | Impartire (rap1, rap2)->functie rap1 /. functie rap2
+  | Fc1 (f, nr)->f (functie nr)
+  | Fc2 (f, nr1, nr2)->f (functie nr1) (functie nr2);;
+val functie : expresie -> float = <fun>
+
+# let e = functie (Adunare(Scadere(Impartire(Valoare 6., Valoare 2.), Inmultire(Valoare 2., Inmultire(Valoare 2., Valoare 2.))), Fc1(cos, Inmultire(Valoare 2., Fc1(asin, Valoare 1.)))));;
+val e : float = -6.

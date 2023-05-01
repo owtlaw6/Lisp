@@ -1,0 +1,7 @@
+(defun countatoms(L)
+  (cond
+    ((null l) 0)
+    ((atom l) 1)
+    (t (+ (countatoms (car l)) (countatoms (cdr l))))
+  )
+)

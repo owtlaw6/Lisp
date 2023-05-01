@@ -1,0 +1,106 @@
+Fulga Fabian-Marian 3.2
+
+Probleme Lucrarea 9
+
+1. (1 punct)Scrieţi o funcţie ce returnează o listă cu toate cheile dintr-o listă
+de asociere.
+
+> (defun lista_chei (lista)
+    (setq a '())
+    (do(
+        (l lista (cdr l))
+        )
+    ((null l) a)
+    (setq a (append a (cdr (car l))))
+    )
+)
+LISTA_CHEI
+
+> (setq telefon '((marca samsung) (culoare alb) (tip galaxyS7) (marime 100) (greutate 350)))
+((MARCA SAMSUNG) (CULOARE ALB) (TIP GALAXYS7) (MARIME 100) (GREUTATE 350))
+
+> (lista_chei telefon)
+(SAMSUNG ALB GALAXYS7 100 350)
+
+2. (2 puncte)Definiţi funcţia recursivă ADAM care primeşte un simbol şi
+returnează cel mai îndepărtat strămoş pe linie paternă.
+
+> (setf (get 'Ion 'tata) '(Gheorghe))
+(GHEORGHE)
+> (setf (get 'Gheorghe 'tata) '(Mishu))
+(MISHU)
+
+> (defun bunic (simbol)
+    (car (get (car (get simbol 'tata )) 'tata))
+)
+BUNIC
+
+>(defun Adam (simbol)
+    (if (not (bunic simbol)) (get simbol 'tata) (Adam (car (get simbol 'tata)))
+    )
+)
+ADAM
+
+> (adam 'ion)
+(MISHU)
+
+
+3. (2 puncte)Definiţi funcţia recursivă STRAMOSI care returnează o listă
+formată din persoana împreuna cu toţi strămoşii cunoscuţi, mergând pe
+două proprietatăti: tata şi mama.
+
+> (setf (get 'Ion 'mama) '(Mirela))
+(MIRELA)
+> (setf (get 'Mirela 'mama) '(Ionela))
+(IONELA)
+> (setf (get 'Ionela 'mama) '(Vasilica))
+(VASILICA)
+> (setf (get 'Vasilica 'mama) '(Marioara))
+(MARIOARA)
+> (setf (get 'Ion 'tata) '(Gheorghe))
+(GHEORGHE)
+> (setf (get 'Gheorghe 'tata) '(Mishu))
+(MISHU)
+> (setf (get 'Mishu 'tata) '(Gigi))
+(GIGI)
+> (setf (get 'Gigi 'tata) '(Vasile))
+(VASILE)
+
+>(defun stramosi_rec (simbol)
+    (setq a (if (not (bunic simbol)) (get simbol 'tata) (append (append (get simbol 'tata) (stramosi_rec (car (get simbol 'tata)))))
+    ))
+    (append a (if (not (bunica simbol)) (get simbol 'mama) (append (get simbol 'mama) (stramosi_rec (car (get simbol 'mama))))
+    )))
+)
+STRAMOSI_REC
+
+>(defun stramosi (simbol)
+    (append (list simbol) (stramosi_rec simbol))
+)
+STRAMOSI
+> (stramosi 'ion)
+(ION GHEORGHE MISHU GIGI VASILE MIRELA IONELA VASILICA MARIOARA)
+
+
+
+4. (3 puncte) Definiţi un macro dotimes cu sintaxa:
+(dotimes (<var> <count> <rezultat> <corp>)
+Prima dată se evaluează <count> care trebuie să fie un întreg. Apoi <var>
+este succesiv legată la întregi de la 0 la valoarea lui <count> minus 1. Corpul
+este evaluat de fiecare dată iar <rezultat> este returnat la sfârşit.
+2 puncte din oficiu
+
+
+(defmacro dotimes(var count rezultat corp)
+  `(do((,var 0 (+ ,var 1)))
+  ((equal ,var ,count) ,rezultat)
+  (setq ,rezultat ,corp)
+  )
+)
+
+> (setq g 0)
+0
+> (setq r 0)
+0
+> (dotimes g 11 r (+ g r))
+55

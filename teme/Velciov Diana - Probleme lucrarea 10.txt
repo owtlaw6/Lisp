@@ -1,0 +1,109 @@
+Velciov Diana 7.2
+
+
+EXERCITIUL 1
+
+> (setq matrice (make-array '(2 2)))
+#2A((NIL NIL) (NIL NIL))
+> (setf (aref matrice 0 0) 'a)
+A
+> (setf (aref matrice 0 1) 'b)
+B
+> (setf (aref matrice 1 0) 'c)
+C
+> (setf (aref matrice 1 1) 'd)
+D
+
+> (defun PRINT-ARRAY (m)
+  (do ((i 0 (+ i 1)) (space '() '()))
+  ((= i (car (array-dimensions m))))
+  (do ((j 0 (+ j 1)))
+  ((= j (car (cdr (array-dimensions m)))) 
+  (do((l (reverse space) (cdr l)))
+  ((null l) (format t "\n"))
+  (format t "~a " (car l))))
+  (setq space (cons (aref m i j) space))) 
+))
+PRINT-ARRAY
+> (print-array matrice)
+A B 
+C D 
+NIL
+
+
+EXERCITIUL 2
+
+> (setq l1 '((a b) (c d)))
+((A B) (C D))
+> (setq l2 '((0 0 a) (0 1 b) (1 0 c) (1 1 d)))
+((0 0 A) (0 1 B) (1 0 C) (1 1 D))
+
+> (defun prima-functie (lista)
+  (setq matrice (make-array (list 
+  (do ((l1 lista (cdr l1))(m 0))
+  ((null l1) m)
+  (setq m (+ m 1)))
+  (do ((l2 (car lista) (cdr l2))(n 0))
+  ((null l2) n)
+  (setq n (+ n 1)) ))))
+  (do ((l3 lista (cdr l3))(i 0 (+ i 1)))
+  ((null l3) matrice)
+  (do ((j 0 (+ j 1)) (ll (car l3) (cdr ll)))
+  ((null ll) )
+  (setf (aref matrice i j) (car ll)))
+))
+PRIMA-FUNCTIE
+> (prima-functie l1)
+#2A((A B) (C D)
+
+> (defun a-doua-functie (lista)
+  (setq matrix (make-array (car (list 
+  (do ((l1 lista (cdr l1)))
+  ((null (cdr l1)) (list (+ (car (car l1)) 1) (+ (car (cdr (car l1))) 1))))))))
+  (do ((l3 lista (cdr l3)))
+  ((null l3) matrix)
+  (setf (aref matrix (car (car l3)) (car (cdr (car l3)))) (caddar l3))
+))
+A-DOUA-FUNCTIE
+> (a-doua-functie l2)
+#2A((A B) (C D))
+
+> (setq m1 '((1 2) (2 4)))
+((1 2) (2 4))
+> (setq m2 '((0 0 1) (0 1 2) (1 0 2) (1 1 1)))
+((0 0 1) (0 1 2) (1 0 2) (1 1 1))
+
+> (defun nr-pare-matrice (m)
+  (do((arg1 0 (+ arg1 1))(space '() '())(par 0))
+  ((= arg1 (car (array-dimensions m))) par)
+  (do ((arg2 0 (+ arg2 1)))
+  ((= arg2 (car (cdr (array-dimensions m))))) 
+  (if (= (mod (aref m arg1 arg2) 2) 0) (setq par (+ par 1)))
+  (setq space (cons (aref m arg1 arg2) space)))
+))
+NR-PARE-MATRICE
+> (nr-pare-matrice (prima-functie m1))
+3
+> (nr-pare-matrice (a-doua-functie m2))
+2
+
+
+EXERCITIUL 3
+
+>(defstruct nod radacina stga dr)
+NOD
+
+> (defun adaugare (arbore element) (cond ((null arbore) (setf arbore (make-nod :radacina element))) ((> (nod-radacina arbore) element) (setf (nod-stga arbore) (adaugare (nod-stga arbore) element))) (t (setf (nod-dr arbore)(adaugare (nod-dr arbore) element)))) arbore)
+ADAUGARE
+
+> (setf arb (make-nod :radacina 10))
+#S(NOD RADACINA 10 STGA NIL DR NIL)
+
+> (adaugare arb 1)
+#S(NOD RADACINA 10 STGA #S(NOD RADACINA 1 STGA NIL DR NIL) DR NIL)
+> (adaugare arb 15)
+#S(NOD RADACINA 10 STGA #S(NOD RADACINA 1 STGA NIL DR NIL) DR #S(NOD RADACINA 15 STGA NIL DR NIL))
+> (adaugare arb 22)
+#S(NOD RADACINA 10 STGA #S(NOD RADACINA 1 STGA NIL DR NIL) DR #S(NOD RADACINA 15 STGA NIL DR #S(NOD RADACINA 22 STGA NIL DR NIL)))
+> (adaugare arb 0)
+#S(NOD RADACINA 10 STGA #S(NOD RADACINA 1 STGA #S(NOD RADACINA 0 STGA NIL DR NIL) DR NIL) DR #S(NOD RADACINA 15 STGA NIL DR #S(NOD RADACINA 22 STGA NIL DR NIL)))

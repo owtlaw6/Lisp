@@ -1,0 +1,339 @@
+XLISP-PLUS version 3.04
+Portions Copyright (c) 1988, by David Betz.
+Modified by Thomas Almy and others.
+XLISP-STAT Release 3.52.17 (Beta).
+Copyright (c) 1989-1999, by Luke Tierney.
+
+> (defun spatii (x) 
+  (do (i x (- i 1))
+  ((equal i 0) nil)
+  (princ space)
+))
+SPATII
+> (setq space '| |)
+| |
+> (setq par '|}|)
+}
+> (setq pard '|{|)
+{
+> (spatii 3)(princ pard)
+Error: The variable I is unbound.
+Happened in: #<Closure-SPATII: #2a0f17c>
+> (spatii '3)(princ pard)
+Error: The variable I is unbound.
+Happened in: #<Closure-SPATII: #2a0f17c>
+> (defun spatii (x) 
+  (do (i x (- i 1))
+  ((equal i 0) 'a)
+  (princ space)
+))
+SPATII
+> (spatii '3)
+Error: The variable I is unbound.
+Happened in: #<Closure-SPATII: #2a1c6a8>
+> (defun spatii (x) 
+  (do ((i x (- i 1)))
+  ((equal i 0) 'a)
+  (princ space)
+))
+SPATII
+> (spatii '3)
+   
+A
+> (defun print1-lista(l)
+(princ pard)
+(do((lst l (cdr lst)))
+((null (cdr lst))(princ space)(princ space)(if (listp (car lst)) ((setq nr (+ 1 nr))(spatii nr)(princ (car lst)) ) (princ (car lst)))(princ space)(princ par))
+(princ space)(princ space)(princ (car lst))(terpri)))
+PRINT1-LISTA
+> (setq nr 2)
+2
+> (print1-lista '(a b (c d) e f))
+{  A
+  B
+  (C D)
+  E
+  F }
+}
+>2
+
+
+)
+Error: misplaced close paren
+Happened in: #<Subr: #29e52c4>
+> (defun print1-lista(l)
+(princ pard)
+(do((lst l (cdr lst))(nr 2))
+((null (cdr lst))(princ space)(princ space)(if (listp (car lst)) ((setq nr (+ 1 nr))(spatii nr)(princ (car lst)) ) (princ (car lst)))(princ space)(princ par))
+(princ space)(princ space)(princ (car lst))(terpri)))
+PRINT1-LISTA
+> (defun print1-lista(l)
+(princ pard)
+(do((lst l (cdr lst))(nr 2))
+((null (cdr lst))(princ space)(princ space)(if (listp (car lst)) ((setq nr (+ 2 nr))(spatii nr)(princ (car lst)) ) (princ (car lst)))(princ space)(princ par))
+(princ space)(princ space)(princ (car lst))(terpri)))
+PRINT1-LISTA
+> (print1-lista '(a b (c d) e f))
+{  A
+  B
+  (C D)
+  E
+  F }
+}
+> (print1-lista '(a b (c d) (e f) g h))
+{  A
+  B
+  (C D)
+  (E F)
+  G
+  H }
+}
+> (defun print1-lista(l)
+(princ pard)
+(do((lst l (cdr lst))(nr 2))
+((null (cdr lst))(princ space)(princ space)(if (listp (car lst))((setq nr (+ 2 nr))(princ nr)(princ (car lst)) ) (princ (car lst)))(princ space)(princ par))
+(princ space)(princ space)(princ (car lst))(terpri)))
+PRINT1-LISTA
+> (print1-lista '(a b (c d) (e f) g h))
+{  A
+  B
+  (C D)
+  (E F)
+  G
+  H }
+}
+> (defun print1-lista(l)
+(princ pard)
+(do((lst l (cdr lst))(nr '2))
+((null (cdr lst))(princ space)(princ space)(if (listp (car lst))((setq nr (+ 2 nr))(princ nr)(prin(car lst)) ) (princ (car lst)))(princ space)(princ par))
+(princ space)(princ space)(princ (car lst))(terpri)))
+PRINT1-LISTA
+> (print1-lista '(a b (c d) (e f) g h))
+{  A
+  B
+  (C D)
+  (E F)
+  G
+  H }
+}
+> (defun print1-lista(l)
+(princ pard)
+(do((lst l (cdr lst))(nr '2))
+((null (cdr lst))(princ space)(princ space)(if (not(listp (car lst))) (princ (car lst)) ((setq nr (+ 2 nr))(princ nr)(prin(car lst))) )(princ space)(princ par))
+(princ space)(princ space)(princ (car lst))(terpri)))
+PRINT1-LISTA
+> (print1-lista '(a b (c d) (e f) g h))
+{  A
+  B
+  (C D)
+  (E F)
+  G
+  H }
+}
+> (defun print1-lista(l)
+(princ pard)
+(do((lst l (cdr lst))(nr '2))
+((null (cdr lst))(princ space)(princ space)(if (listp (car lst))( (princ nr) (setq nr (+ 2 nr))(spatii nr)(prin(car lst)) ) (princ (car lst)))(princ space)(princ par))
+(princ space)(princ space)(princ (car lst))(terpri)))
+PRINT1-LISTA
+> (print1-lista '(a b (c d) (e f) g h))
+{  A
+  B
+  (C D)
+  (E F)
+  G
+  H }
+}
+> (defun print1-lista(l)
+(princ pard)
+(do((lst l (cdr lst))(nr '2))
+((null (cdr lst))(princ space)(princ space)(if (listp (car lst))( (print nr) (setq nr (+ 2 nr))(spatii nr)(prin(car lst)) ) (princ (car lst)))(princ space)(princ par))
+(princ space)(princ space)(princ (car lst))(terpri)))
+PRINT1-LISTA
+> (print1-lista '(a b (c d) (e f) g h))
+{  A
+  B
+  (C D)
+  (E F)
+  G
+  H }
+}
+> (defun print1-lista(l)
+(princ pard)
+(do((lst l (cdr lst))(nr '2))
+((null (cdr lst))(princ space)(princ space)(if (listp (car lst))(begin (print nr) (setq nr (+ 2 nr))(spatii nr)(prin(car lst)) ) (princ (car lst)))(princ space)(princ par))
+(princ space)(princ space)(princ (car lst))(terpri)))
+PRINT1-LISTA
+> (print1-lista '(a b (c d) (e f) g h))
+{  A
+  B
+  (C D)
+  (E F)
+  G
+  H }
+}
+> (defun print1-lista(l)
+(princ pard)
+(do((lst l (cdr lst))(nr '2))
+((null (cdr lst))(princ space)(princ space)(if (listp (car lst))(progn (print nr) (setq nr (+ 2 nr))(spatii nr)(prin(car lst)) ) (princ (car lst)))(princ space)(princ par))
+(princ space)(princ space)(princ (car lst))(terpri)))
+PRINT1-LISTA
+> (print1-lista '(a b (c d) (e f) g h))
+{  A
+  B
+  (C D)
+  (E F)
+  G
+  H }
+}
+> (defun print1-lista(l)
+(princ pard)
+(do((lst l (cdr lst))(nr '2))
+((null (cdr lst))(princ space)(princ space)(if (listp (car lst))((print nr) (setq nr (+ 2 nr))(spatii nr)(prin(car lst))) (princ (car lst)))(princ space)(princ par))
+(princ space)(princ space)(if (listp (car lst))((print nr) (setq nr (+ 2 nr))(spatii nr)(prin(car lst))))(terpri)))
+PRINT1-LISTA
+> (print1-lista '(a b (c d) (e f) g h))
+{  
+  
+  
+Error: bad function - (PRINT NR)
+Happened in: #<FSubr-IF: #29e3ab4>
+> (defun print1-lista(l)
+(princ pard)
+(do((lst l (cdr lst))(nr '2))
+((null (cdr lst))(princ space)(princ space)(if (listp (car lst))((setq nr (+ 2 nr))(spatii nr)(prin(car lst))) (princ (car lst)))(princ space)(princ par))
+(princ space)(princ space)(if (listp (car lst))((setq nr (+ 2 nr))(spatii nr)(prin(car lst))))(terpri)))
+PRINT1-LISTA
+> (print1-lista '(a b (c d) (e f) g h))
+{  
+  
+  
+Error: bad function - (SETQ NR (+ 2 NR))
+Happened in: #<FSubr-IF: #29e3ab4>
+> (defun print1-lista(l)
+(princ pard)
+(do((lst l (cdr lst))(nr '2))
+((null (cdr lst))(princ space)(princ space)(if (listp (car lst))((spatii (+ 2 nr))(prin(car lst))) (princ (car lst)))(princ space)(princ par))
+(princ space)(princ space)(if (listp (car lst))((setq nr (+ 2 nr))(spatii nr)(prin(car lst))))(terpri)))
+PRINT1-LISTA
+> (print1-lista '(a b (c d) (e f) g h))
+{  
+  
+  
+Error: bad function - (SETQ NR (+ 2 NR))
+Happened in: #<FSubr-IF: #29e3ab4>
+> (defun print1-lista(l)
+(princ pard)
+(do((lst l (cdr lst))(nr '2))
+((null (cdr lst))(princ space)(princ space)(if (listp (car lst))((spatii (+ 2 nr))(prin(car lst))) (princ (car lst)))(princ space)(princ par))
+(princ space)(princ space)(if (listp (car lst))((spatii (+ 2 nr))(setq nr (+ 2 nr))(prin(car lst))))(terpri)))
+PRINT1-LISTA
+> (print1-lista '(a b (c d) (e f) g h))
+{  
+  
+  
+Error: bad function - (SPATII (+ 2 NR))
+Happened in: #<FSubr-IF: #29e3ab4>
+> (defun print1-lista(l)
+(princ pard)
+(do((lst l (cdr lst))(nr '2))
+((null (cdr lst))(princ space)(princ space)(if (listp (car lst))((spatii (+ 2 nr))(prin(car lst))) (princ (car lst)))(princ space)(princ par))
+(princ space)(princ space)(if (listp (car lst))(progn(setq nr (+ 2 nr))(spatii nr)(prin(car lst))))(terpri)))
+PRINT1-LISTA
+> (print1-lista '(a b (c d) (e f) g h))
+{  
+  
+      
+Error: The function PRIN is not defined.
+Happened in: #<FSubr-IF: #29e3ab4>
+> (defun print1-lista(l)
+(princ pard)
+(do((lst l (cdr lst))(nr '2))
+((null (cdr lst))(princ space)(princ space)(if (listp (car lst))((spatii (+ 2 nr))(princ(car lst))) (princ (car lst)))(princ space)(princ par))
+(princ space)(princ space)(if (listp (car lst))(progn(setq nr (+ 2 nr))(spatii nr)(princ(car lst))))(terpri)))
+PRINT1-LISTA
+> (print1-lista '(a b (c d) (e f) g h))
+{  
+  
+      (C D)
+        (E F)
+  
+  H }
+}
+> (defun print1-lista(l)
+(princ pard)
+(do((lst l (cdr lst))(nr '2))
+((null (cdr lst))(princ space)(princ space)(if (listp (car lst))((spatii (+ 2 nr))(princ(car lst))) (princ (car lst)))(princ space)(princ par))
+(princ space)(princ space)(if (listp (car lst))(progn(setq nr (+ 2 nr))(spatii nr)(princ(car lst))) (princ(car lst)) )(terpri)))
+PRINT1-LISTA
+> (print1-lista '(a b (c d) (e f) g h))
+{  A
+  B
+      (C D)
+        (E F)
+  G
+  H }
+}
+> (defun print1-lista(l)
+(princ pard)
+(do((lst l (cdr lst))(nr '2))
+((null (cdr lst))(princ space)(princ space)(if (listp (car lst))(progn(spatii (+ 1 nr))(princ(car lst))) (princ (car lst)))(princ space)(princ par))
+(princ space)(princ space)(if (listp (car lst))(progn(setq nr (+ 1 nr))(spatii nr)(princ(car lst))) (princ(car lst)) )(terpri)))
+PRINT1-LISTA
+> (print1-lista '(a b (c d) (e f) g h))
+{  A
+  B
+     (C D)
+      (E F)
+  G
+  H }
+}
+> (defun print1-lista(l)
+(princ pard)
+(do((lst l (cdr lst))(nr '0))
+((null (cdr lst))(princ space)(princ space)(if (listp (car lst))(progn(spatii (+ 2 nr))(princ(car lst))) (princ (car lst)))(princ space)(princ par))
+(princ space)(princ space)(if (listp (car lst))(progn(setq nr (+ 2 nr))(spatii nr)(princ(car lst))) (princ(car lst)) )(terpri)))
+PRINT1-LISTA
+> (print1-lista '(a b (c d) (e f) g h))
+{  A
+  B
+    (C D)
+      (E F)
+  G
+  H }
+}
+> (print1-lista '(a b (c d) (e f g) h))
+{  A
+  B
+    (C D)
+      (E F G)
+  H }
+}
+> (defun print1-lista(l n)
+(princ pard)
+(do((lst l (cdr lst))(nr n))
+((null (cdr lst))(princ space)(princ space)(if (listp (car lst))(progn(spatii (+ 2 nr))(princ(car lst))) (princ (car lst)))(princ space)(princ par))
+(princ space)(princ space)(if (listp (car lst))(progn(setq nr (+ 2 nr))(spatii nr)(print1-lista((car lst) nr))) (princ(car lst)) )(terpri)))
+PRINT1-LISTA
+> (print1-lista '(a b (c d) (e f g) h))
+Error: too few arguments
+Happened in: #<Closure-PRINT1-LISTA: #2a448a4>
+> (print1-lista '(a b (c d) (e f g) h) '0)
+{  A
+  B
+    
+Error: bad function - (CAR LST)
+Happened in: #<FSubr-PROGN: #29e3974>
+> (defun print1-lista(l n)
+(princ pard)
+(do((lst l (cdr lst))(nr n))
+((null (cdr lst))(princ space)(princ space)(if (listp (car lst))(progn(spatii (+ 2 nr))(princ(car lst))) (princ (car lst)))(princ space)(princ par))
+(princ space)(princ space)(if (listp (car lst))(progn(setq nr (+ 2 nr))(spatii nr)(print1-lista((list(car lst)) nr))) (princ(car lst)) )(terpri)))
+PRINT1-LISTA
+> (print1-lista '(a b (c d) (e f g) h) '0)
+{  A
+  B
+    
+Error: bad function - (LIST (CAR LST))
+Happened in: #<FSubr-PROGN: #29e3974>
+> 

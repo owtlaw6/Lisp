@@ -1,0 +1,31 @@
+
+> (setq vector (make-array 5))
+#(NIL NIL NIL NIL NIL)
+
+> (setf (aref vector 0) '2)
+2
+> (setf (aref vector 1) '1)
+1
+> (setf (aref vector 2) '0)
+0
+> (setf (aref vector 3) '-1)
+-1
+> (setf (aref vector 4) '0)
+0
+> vector
+#(2 1 0 -1 0)
+
+
+(defun functie(vector)
+    (do (
+         (i 0 (+ i 1))
+         (pozitive 0)
+         (negative 0)
+         (zero 0)
+         )
+        ((= i (array-dimension vector 0)) (list pozitive zero negative))
+        (if (< 0 (aref vector i)) (setq pozitive (+ 1 pozitive)) (if (> 0 (aref vector i)) (setq negative (+ 1 negative)) (setq zero (+ 1 zero)) ) )
+))
+FUNCTIE
+> (functie vector)
+(2 2 1)

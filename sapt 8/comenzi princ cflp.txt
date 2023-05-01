@@ -1,0 +1,9 @@
+print - pune spatiu la final
+prin1 - nu pune spatiu, pastreaza ||
+princ - nu pune spatiu, scoate ||
+
+(setq pard '|{|)
+(setq par '|}|)
+(setq space '| |)
+
+TERPRI - trece pe rând nou

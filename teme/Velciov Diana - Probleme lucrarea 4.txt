@@ -1,0 +1,84 @@
+Velciov Diana 7.2
+
+
+EXERCITIUL 1
+
+(A B C D)
+> (car (cdr (cdr (cdr ' (A B C D)))))
+D
+
+(A (B C) (D E))
+> (car (car (cdr (cdr '(A (B C) (D E))))))
+D
+
+(A (B C (D E)))
+> (car (car (cdr (cdr (car (cdr ' (A (B C (D E)))))))))
+D
+
+((A) (B) (C) (D) (E))
+> (car (car (cdr (cdr (cdr '((A) (B) (C) (D) (E)))))))
+D
+
+(A (B) ((C)) (((D))) ((((E)))))
+> (car (car (car (car (cdr (cdr (cdr '(A (B) ((C)) (((D)))((((E))))))))))))
+D
+
+((((A) B) C) D)
+> (car (cdr '((((A) B) C) D)))
+D
+
+
+EXERCITIUL 2
+
+Toate functiile de constructie a listelr si cele de acces la elementele unei liste sunt: car, cdr, last, nth, nthcdr, reverse, subst, cons, list, append, setq
+
+> (setq l1 '((A) (B) (C) (D) (E)))
+((A) (B) (C) (D) (E))
+> (setq l2 ( reverse (append (nth '2 l1) (car (nthcdr '3 l1)) (nth '4 l1))) )
+(E D C)
+> (setq l2 (list l2))
+((E D C))
+> (setq l3 (list (car l1) (cadr l1) (car (last l1))))
+((A) (B) (E))
+> (setq l3 (subst 'C 'E l3))
+((A) (B) (C))
+> (setq l4 (append (list l3) (car (car (cdr l1)))))
+(((A) (B) (C)) . B)
+> (setq l2 (car l2))
+(E D C)
+> (setq l5 (cons l2 (car (nthcdr '3 l1))))
+((E D C) D)
+> (append (list l4) l5)
+((((A) (B) (C)) . B) (E D C) D)
+
+
+EXERCITIUL 3
+
+> (setq l1 '((((A) (B)) C) (D) (EF G)))
+((((A) (B)) C) (D) (EF G))
+> l1
+((((A) (B)) C) (D) (EF G))
+> (append (list (cadr l1)) (list (car (nth '1 l1))) (list (last l1)))
+((D) D ((EF G)))
+> (list (cadr l1) (car (nth '1 l1)) (last l1))
+((D) D ((EF G)))
+> (append (append (cadr l1) NIL) (append (append (nth '1 l1) NIL)) (append (last l1) NIL))
+(D D (EF G))
+
+> (cons (nth '3 l1) (nthcdr '2 l1))
+(NIL (EF G))
+
+-> (nthcdr '2 l1) returneaza ((EF G))
+-> NIL se obtine din evaluarea expresiei (nth '3 l1)
+-> cons construieste o celula din doi atomi, rezultata din evaluarea celor doua argumente, punandu-l pe primul în jumatatea
+car si pe cel de al doilea în jumatatea cdr, deci se obtine 
+(NIL (EF G)) cu car-ul avand elementul NIL și cdr-ul avand lista ((EF G)). Deoarece primul argument este un atom, iar al doilea este o lista, cons va insera atomul în lista.
+
+
+EXERCITIUL 4
+
+> (cons 'D (cdr (subst 'A 'D '(A B C D))))
+(D B C A)
+
+> (reverse (cons 'C (cdr (subst 'A 'C '(A B C D)))))
+(D A B C)
